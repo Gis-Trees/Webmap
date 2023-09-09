@@ -1,0 +1,82 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #deeae0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #4d2924;
+}
+.container {
+  background-color: #ffffff;
+  text-align: center;
+  width: 650px;
+  height: 500px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, 0.1);
+  padding: 0 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  row-gap: 25px;
+}
+h1 {
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+label {
+  font-size: 25px;
+  font-weight: 500;
+  display: inline-block;
+  text-align: left;
+  width: 140px;
+}
+input {
+  width: 379px;
+  height: 54px;
+  border-radius: 10px;
+  outline: none;
+  font-size: 18px;
+  padding: 10px;
+}
+
+#button {
+  width: 200px;
+  height: 50px;
+  font-size: 18px;
+  font-weight: 500;
+  background-color: #00ce6a;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 25px;
+  color: #4d2924;
+  margin: 0 auto;
+}
+.form-message {
+  display: block;
+}
+#adminForm {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+.Invalid {
+  color: red;
+}
