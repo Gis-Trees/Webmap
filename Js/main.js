@@ -1,5 +1,6 @@
-Validator({
+SetFormValidator({
   form: "#adminForm",
+  formGroupSelector: ".form-group",
   errorSelector: ".form-message",
   submitSelector: "#button",
   rules: [
@@ -13,13 +14,20 @@ Validator({
     console.log(data);
   },
 });
-
-//validator
-function Validator(option) {
+function SetFormValidator(option) {
+  let getParent = (element, selector) => {
+    while (element.parentElement) {
+      if (element.parentElement.matches(selector)) {
+        return element.parentElement;
+      }
+      element = element.parentElement;
+    }
+  };
   let validate = (inputElement, rule) => {
-    let errorSelector = inputElement.parentElement.querySelector(
-      option.errorSelector
-    );
+    let errorSelector = getParent(
+      inputElement,
+      option.formGroupSelector
+    ).querySelector(option.errorSelector);
     let errorMessage;
     //get each element
     let Rules = setSelector[rule.selector];
@@ -68,14 +76,31 @@ function Validator(option) {
           isFormValid = false;
         }
       });
+
       if (isFormValid) {
-        window.location.assign("map.html");
+        toast({
+          title: "Login success",
+          type: "success",
+          duration: 2,
+          delay: 3,
+        });
+        setTimeout(function () {
+          window.location.assign("map.html");
+        }, 2000);
+      } else {
+        toast({
+          title: "Login error",
+          type: "error",
+          duration: 2,
+          delay: 3,
+        });
       }
     };
     //reset isFormValid by event onclick
     let getBtnSelector = getFormSelector.querySelector("#button");
-    getBtnSelector.onclick = function () {
+    getBtnSelector.onclick = function (e) {
       isFormValid = true;
+      console.log("e", e);
     };
     //add element to setSelector object
     option.rules.forEach((rule) => {
@@ -86,6 +111,7 @@ function Validator(option) {
       }
       //get input element
       let inputElement = getFormSelector.querySelector(rule.selector);
+      console.log(inputElement);
       //check input element
       if (inputElement) {
         inputElement.onblur = function () {
@@ -96,17 +122,16 @@ function Validator(option) {
     });
   }
 }
-
 function isRequired(selector, message) {
   return {
     selector: selector,
     check: function (value) {
-      return value ? undefined : message;
+      return value.trim() ? undefined : message;
     },
   };
 }
 
-function isConfirmed(selector, message, valueInput) {
+export function isConfirmed(selector, message, valueInput) {
   return {
     selector: selector,
     check: function (value) {
@@ -115,14 +140,31 @@ function isConfirmed(selector, message, valueInput) {
   };
 }
 
-// if (!isValid) {
-//   isFormValid = false;
-// } else {
-//   isFormValid = true;
-// }
-
-// console.log("isForm", isFormValid);
-
-// if (typeof option.onsubmit === "function") {
-//   option.onsubmit({ name: "laura" });
-// }
+function toast({ title, type, duration, delay }) {
+  const toastID = document.getElementById("toast");
+  if (toastID) {
+    const createIdToast = document.createElement("div");
+    createIdToast.style.animation = ` slideFromRight ${duration}s ease, fadeOut ${duration}s linear ${delay}s forwards`;
+    createIdToast.classList.add("toast", `toast--${type}`);
+    createIdToast.innerHTML = `
+  <div class="toast__icon">
+    <i class="fa-regular fa-circle-check"></i>
+  </div>
+  <div class="toast__body">
+    <h3 class="toast__title">${title}</h3>
+  </div>
+  <div class="toast__close">
+    <i class="fa-solid fa-xmark"></i>
+  </div>
+  `;
+    toastID.appendChild(createIdToast);
+    let removeToast = setTimeout(
+      () => toastID.removeChild(createIdToast),
+      5000
+    );
+    createIdToast.querySelector(".toast__close").onclick = () => {
+      toastID.removeChild(createIdToast);
+      clearTimeout(removeToast);
+    };
+  }
+}

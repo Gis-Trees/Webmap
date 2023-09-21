@@ -80,3 +80,72 @@ input {
 .Invalid {
   color: red;
 }
+
+/* toast message *******************************************************/
+#toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+}
+.toast {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 2px;
+  border-left: 8px solid;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+}
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(calc(100% + 20px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+.toast + .toast {
+  margin-top: 24px;
+}
+.toast__icon {
+  font-size: 30px;
+}
+.toast__close,
+.toast__icon {
+  padding: 0 20px;
+}
+.toast__body {
+  flex-grow: 1;
+}
+.toast__title {
+  font-size: 25px;
+  font-weight: 600;
+}
+.toast__close {
+  font-size: 30px;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.toast__close:hover {
+  color: rgba(0, 0, 0, 0.2);
+}
+.toast--success {
+  border-color: #47d764;
+}
+.toast--success .toast__icon {
+  color: #47d764;
+}
+.toast--error {
+  border-color: #ff2121;
+}
+.toast--error .toast__icon {
+  color: #ff2121;
+}
